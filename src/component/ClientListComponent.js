@@ -3,12 +3,35 @@ import ClientService from '../service/ClientService';
 
 class ListClientComponent extends Component {
 
+    constructor(props) {
+        super(props)
+        this.state = {
+            clients: [],
+            message: null
+        }
+        this.getClients = this.getClients.bind(this)
+    }
+
+    componentDidMount() {
+        this.getClients();
+    }
+
+    getClients() {
+        ClientService.getClients()
+            .then(response => {
+                    console.log(response);
+                    this.setState({ clients: response.data })
+                }
+            )
+    }
+
+
     render() {
         return (
-            <div className="container">
+            <div className="container p-4">
                 <h3>Clients</h3>
                 <div className="container">
-                    <table className="table">
+                    <table className="table ">
                         <thead>
                         <tr>
                             <th>Id</th>
@@ -19,13 +42,18 @@ class ListClientComponent extends Component {
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Learn Full stack with Spring Boot and Angular</td>
-                            <td>Learn Full stack with Spring Boot and Angular</td>
-                            <td>Learn Full stack with Spring Boot and Angular</td>
-                            <td>Learn Full stack with Spring Boot and Angular</td>
-                        </tr>
+                        {
+                            this.state.clients.map(
+                                client =>
+                                    <tr key={client.id}>
+                                        <td>{client.id}</td>
+                                        <td>{client.name}</td>
+                                        <td>{client.address}</td>
+                                        <td>{client.nif}</td>
+                                        <td>{client.phone_nr}</td>
+                                    </tr>
+                            )
+                        }
                         </tbody>
                     </table>
                 </div>
