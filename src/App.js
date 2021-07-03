@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import './App.css';
 import "bootstrap/dist/css/bootstrap.min.css";
+import ClientListComponent from "./component/ClientListComponent";
 
 
 class App extends Component {
@@ -12,7 +13,9 @@ class App extends Component {
               Client Management App
             </a>
           </nav>
+            <ClientListComponent/>
         </div>
+
     );
   }
 }
