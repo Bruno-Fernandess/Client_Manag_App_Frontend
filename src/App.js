@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import './App.css';
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Route, Switch } from 'react-router-dom';
 import ClientListComponent from "./component/ClientListComponent";
+import ClientComponent from "./component/ClientComponent";
+import ClientAddComponent from "./component/ClientAddComponent";
+
 
 
 class App extends Component {
@@ -13,8 +17,13 @@ class App extends Component {
               Client Management App
             </a>
           </nav>
-            <ClientListComponent/>
+            <Switch>
+                <Route exact path={["/", "/clients"]} component={ClientListComponent} />
+                <Route exact path="/clients/add" component={ClientAddComponent} />
+                <Route path="/clients/:nif" component={ClientComponent} />
+            </Switch>
         </div>
+
 
     );
   }
