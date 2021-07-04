@@ -7,6 +7,7 @@ class ListClientComponent extends Component {
         super(props)
         this.state = {
             clients: [],
+            search: "",
             message: null
         }
         this.getClients = this.getClients.bind(this)
@@ -18,6 +19,8 @@ class ListClientComponent extends Component {
     componentDidMount() {
         this.getClients();
     }
+
+
 
     getClients() {
         ClientService.getClients()
@@ -37,6 +40,20 @@ class ListClientComponent extends Component {
             )
     }
 
+    handleSearch = () => {
+        ClientService.getClientsWithName(this.state.search)
+            .then(
+                response => {
+                    this.setState({ clients: response.data })
+                }
+            )
+    };
+
+    handleSearchChange = (event) => {
+        this.setState(prevState => ({ search:  event.target.value }))
+        console.log(this.state.search)
+    };
+
     updateClient(nif) {
         this.props.history.push(`/clients/${nif}`)
     }
@@ -53,14 +70,20 @@ class ListClientComponent extends Component {
                 <h3>Clients</h3>
                 {this.state.message && <div class="alert alert-success">{this.state.message}</div>}
 
-                <div className="p-4">
-                    <button className="btn btn-success" onClick={() => this.addClient()}>Add new Client</button>
-                    <form className="pb-4 float-end" onSubmit={this.handleSubmit}><label>
-                        Search client by Name
-                        <input type="text" value={this.state.value} onChange={this.handleChange}/> </label>
-                        <input type="submit" value="Search"/>
+                <div className="float-start">
+                    <form>
+                        <div className="input-group mb-3 pt-4">
+                            <input type="text" className="form-control" onChange={this.handleSearchChange} placeholder="Search User by Name"/>
+                            <div className="input-group-append">
+                                <button className="btn btn-primary" type="button" onClick={() => this.handleSearch()} >Search</button>
+                            </div>
+                        </div>
                     </form>
                 </div>
+                <div className="form-group float-end">
+                    <button className="btn btn-success" onClick={() => this.addClient()}>Add new Client</button>
+                </div>
+
                 <div className="container">
                     <table className="table ">
                         <thead>
