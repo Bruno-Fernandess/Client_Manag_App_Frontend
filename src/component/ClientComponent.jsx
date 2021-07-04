@@ -1,15 +1,17 @@
 import React, { Component } from 'react'
 import ClientService from '../service/ClientService';
 
+
 class  ClientComponent extends Component {
 
     constructor(props) {
         super(props)
         this.state = {
             nif: this.props.match.params.nif,
-            client: {}
+            client: {},
         }
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleCancel = this.handleCancel.bind(this);
         this.handleNameChange = this.handleNameChange.bind(this);
         this.handleAddressChange = this.handleAddressChange.bind(this);
         this.handleNiFChange = this.handleNiFChange.bind(this);
@@ -47,17 +49,20 @@ class  ClientComponent extends Component {
         }))
     };
 
-    handleSubmit() {
-        ClientService.updateClient(this.state.client.id,this.state.client)
-        this.props.history.push(`/clients/`)
+
+
+    handleSubmit(e) {
+        e.preventDefault();
+       ClientService.updateClient(this.state.client.id,this.state.client)
+           .then(() => this.props.history.push('/'))
     }
 
     handleCancel() {
-        this.props.history.push(`/clients/`)
+        this.props.history.push(`/`)
     }
 
     render() {
-        let { client, nif } = this.state
+        let { client } = this.state
         return (
             <div className="container-fluid">
                 <div className="text-center"><h2>Client: {client.id}</h2></div>

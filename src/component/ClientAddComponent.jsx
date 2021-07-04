@@ -50,17 +50,17 @@ class  ClientAddComponent extends Component {
         }))
     };
 
-    handleAddUser() {
+    handleAddUser(e) {
+        e.preventDefault();
         ClientService.createClient(this.state.client)
-        this.props.history.push(`/clients/`)
+            .then(() => this.props.history.push('/'))
     }
 
     handleCancel() {
-        this.props.history.push(`/clients/`)
+        this.props.history.push(`/`)
     }
 
     render() {
-        let { client, nif } = this.state
         return (
             <div className="container-fluid">
                 <div className="text-center p-4"><h2> Add New Client</h2></div>

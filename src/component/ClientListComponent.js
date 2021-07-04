@@ -17,7 +17,19 @@ class ListClientComponent extends Component {
     }
 
     componentDidMount() {
+        console.log("Mounting")
         this.getClients();
+    }
+
+
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevState.data !== this.state.clients) {
+            console.log("state",prevState.data)
+            console.log(this.state.clients)
+
+            //this.getClients();
+        }
     }
 
 
